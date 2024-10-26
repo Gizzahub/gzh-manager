@@ -2,6 +2,49 @@
 
 종합 CLI 툴
 
+
+## Usage
+
+### Setclone cli
+
+
+
+### Setclone config
+
+```yaml
+# setclone.yaml 
+github:
+  ScriptonBasestar:
+    auth: token
+    # default https, ssh
+    proto: https
+    targetPath: $HOME/mywork/ScriptonBasestar
+    # default include
+    default:
+      strategy: include
+      branch: develop
+    include:
+      proxynd:
+        branch: develop
+      devops-minim-engine:
+        branch: dev
+    exclude:
+      # regex
+      - sb-wp-*
+    override:
+      include:
+  nginxinc:
+    targetPath: $HOME/mywork/nginxinc
+```
+
+```bash
+gzh setclone -o nginxinc
+gzh setclone -o nginxinc -t $HOME/mywork/nginxinc
+gzh setclone -o nginxinc -t $HOME/mywork/nginxinc --auth token
+```
+
+
+
 <div style="text-align: center;">
 A general purpose project for easy dev.
 <br>
