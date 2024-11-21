@@ -52,3 +52,67 @@
 - [ ] daemon 모니터링
 - [ ] hook wifi change event? -> action
 - [ ] action: vpn, dns, proxy, host 등 변경
+
+## Github org, repo 기본설정
+terraform으로 하는게 나을지도 모름
+github action으로 할까 했는데 좀 안맞는 것 같아서 여기로 이동
+
+참고프로젝트
+
+- https://github.com/actions/hello-world-docker-action
+- https://github.com/actions/typescript-action
+- https://github.com/actions/hello-world-javascript-action
+- https://github.com/actions/javascript-action
+- https://github.com/actions/starter-workflows
+
+참고독s
+- https://docs.github.com/ko/actions/security-for-github-actions/security-guides/automatic-token-authentication
+- https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#update-a-repository
+
+env
+https://stackoverflow.com/questions/73955908/how-to-use-env-variable-as-default-value-for-input-in-github-actions
+
+```
+        const repoUpdateResult = octokit.repos.update({
+          owner: repoOwner,
+          repo: repo.name,
+
+          name: repo.name,
+          // description: repo.description,
+          // homepage: repo.homepage,
+          private: repoMeta.private,
+          visibility: repoMeta.visibility,
+          security_and_analysis: repoMeta.security_and_analysis,
+
+          has_issues: repoMeta.has_issues,
+          has_projects: repoMeta.has_projects,
+          has_wiki: repoMeta.has_wiki,
+
+          default_branch: repo.default_branch,
+
+          allow_squash_merge: repoMeta.allow_squash_merge,
+          allow_merge_commit: repoMeta.allow_merge_commit,
+          allow_rebase_merge: repoMeta.allow_rebase_merge,
+
+          delete_branch_on_merge: repoMeta.delete_branch_on_merge,
+
+          allow_update_branch: repoMeta.allow_update_branch,
+
+          use_squash_pr_title_as_default: repoMeta.use_squash_pr_title_as_default,
+
+          squash_merge_commit_title: repoMeta.squash_merge_commit_title,
+          squash_merge_commit_message: repoMeta.squash_merge_commit_message,
+
+          merge_commit_title: repoMeta.merge_commit_title,
+          merge_commit_message: repoMeta.merge_commit_message,
+
+          archived: repoMeta.archived,
+          allow_forking: repoMeta.allow_forking,
+          allow_auto_merge: repoMeta.allow_auto_merge,
+
+          web_commit_signoff_required: repoMeta.web_commit_signoff_required,
+        })
+```
+### 토큰 권한 문서
+https://docs.github.com/ko/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28
+https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication
