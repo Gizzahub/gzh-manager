@@ -38,6 +38,22 @@
 - minor latest
 - major latest
 
+## IDE
+Jetbrains 설정변경 감지 https://github.com/fsnotify/fsnotify
+리눅스 (Linux)
+경로: ~/.config/JetBrains/<Product><Version>/
+예: ~/.config/JetBrains/IntelliJIdea2023.2/
+맥OS (MacOS)
+경로: ~/Library/Application Support/JetBrains/<Product><Version>/
+예: ~/Library/Application Support/JetBrains/IntelliJIdea2023.2/
+윈도우 (Windows)
+경로: %APPDATA%\JetBrains\<Product><Version>\
+예: C:\Users\<YourUserName>\AppData\Roaming\JetBrains\IntelliJIdea2023.2\
+
+setting sync 좆같이 오류나서 이런것들 강제 수정
+- [ ] ~/.config/JetBrains/PyCharm2024.3/settingsSync/options/filetypes.xml
+      <mapping pattern="Dockerfile.*" type="Dockerfile" />
+
 ## 개발환경 Save & Load
 - [ ] kubeconfig
 - [ ] docker config
