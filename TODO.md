@@ -15,7 +15,7 @@
 - [ ] setclone.yaml override setclone.home.yaml setclone.work.yaml. kustomize 이용
 - [ ] setclone.yaml 설정파일 예시
 - [ ] setclone.yaml schema
-- 
+
 ### Github Org
 - [x] gituhb org setclone cli
 
@@ -50,7 +50,7 @@ Jetbrains 설정변경 감지 https://github.com/fsnotify/fsnotify
 경로: %APPDATA%\JetBrains\<Product><Version>\
 예: C:\Users\<YourUserName>\AppData\Roaming\JetBrains\IntelliJIdea2023.2\
 
-setting sync 좆같이 오류나서 이런것들 강제 수정
+setting sync 오류나서 이런것들 강제 수정
 - [ ] ~/.config/JetBrains/PyCharm2024.3/settingsSync/options/filetypes.xml
       <mapping pattern="Dockerfile.*" type="Dockerfile" />
 
