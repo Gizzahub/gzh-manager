@@ -1,4 +1,4 @@
-package cmd
+package gzh_manager
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ type ManCmd struct {
 }
 
 // NewManCmd manpage cmd.
-//nolint
+// nolint
 func NewManCmd() *ManCmd {
 	root := &ManCmd{}
 
