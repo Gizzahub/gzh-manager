@@ -1,11 +1,8 @@
-gzh-manager
-===========
+Gizzahub Manager
+================
 
 <div style="text-align: center;">
-A general purpose project for easy development.
-<br>
-<br>
-This template serves as a starting point for Golang command-line applications. It is based on high-quality Golang projects and various useful blog posts that helped me understand Golang better.
+Comprehensive CLI Tool
 <br>
 <br>
 <img src="https://github.com/gizzahub/gzh-manager-go/actions/workflows/test.yml/badge.svg" alt="Test Status"/>
@@ -17,7 +14,6 @@ This template serves as a starting point for Golang command-line applications. I
 <img src="https://img.shields.io/github/downloads/Gizzahub/gzh-manager-go/total.svg" alt="Total Downloads"/>
 </div>
 
-Comprehensive CLI Tool
 
 # Table of Contents
 <!--ts-->
@@ -46,6 +42,39 @@ Clone repositories by GitHub account (user, org) or GitLab group.
   - gogs
 
 ### CLI
+
+
+```sh
+$> gzh-manager -h
+golang-cli cli application by managing gzh-manager
+
+Usage:
+  gzh [flags]
+  gzh [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  setclone    Clone repositories in bulk
+  help        Help about any command
+  version     gzh-manager version
+
+Flags:
+  -h, --help   help for gzh-manager
+
+Use "gzh-manager [command] --help" for more information about a command.
+```
+
+First, create a configuration file in the desired path. Refer to
+[setclone.yaml](pkg/setclone/setclone.yaml)
+
+```sh
+$> gzh setclone -t $HOME/mywork
+
+This won't work:
+$> gzh setclone -t ./mywork
+$> gzh setclone -t $HOME/mywork
+$> gzh setclone -t ~/mywork
+```
 
 ### Setclone config
 
@@ -101,48 +130,6 @@ gzh setclone -o nginxinc -t $HOME/mywork/nginxinc --auth token
 - [`tools/`](tools/) => for automatically shipping all required dependencies when running `go get` (or `make bootstrap`) such as `golang-ci-lint` (see: https://github.com/golang/go/wiki/Modules#how-can-i-track-tool-dependencies-for-a-module)
 - [`scripts/`](scripts/) => build scripts 
 
-## How to use this template
-```sh
-```
-
-In order to make the CI work you will need to have the following Secrets in your repository defined:
-
-Repository  -> Settings -> Secrets & variables -> `CODECOV_TOKEN`, `DOCKERHUB_TOKEN` & `DOCKERHUB_USERNAME`
-
-## Demo Application
-
-```sh
-$> gzh-manager -h
-golang-cli cli application by managing gzh-manager
-
-Usage:
-  gzh [flags]
-  gzh [command]
-
-Available Commands:
-  completion  Generate the autocompletion script for the specified shell
-  setclone    Clone repositories in bulk
-  help        Help about any command
-  version     gzh-manager version
-
-Flags:
-  -h, --help   help for gzh-manager
-
-Use "gzh-manager [command] --help" for more information about a command.
-```
-
-First, create a configuration file in the desired path. Refer to
-[setclone.yaml](pkg/setclone/setclone.yaml)
-
-```sh
-$> gzh setclone -t $HOME/mywork
-
-This won't work:
-$> gzh setclone -t ./mywork
-$> gzh setclone -t $HOME/mywork
-$> gzh setclone -t ~/mywork
-```
-
 # Makefile Targets
 ```sh
 $> make
@@ -159,10 +146,3 @@ pre-commit                     run pre-commit hooks
 run                            run the app
 test                           display test coverage
 ```
-
-# Contribute
-If you find issues in this setup or have some nice features/improvements, I would welcome an issue or a PR :)
-
-# Notes
-I used the template from `https://github.com/FalcoSuessgott/golang-cli-template`, but `https://github.com/create-go-app/cli` seems better due to its simplicity.
-It has become somewhat complex. 
