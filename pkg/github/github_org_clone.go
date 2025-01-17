@@ -4,10 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/fatih/color"
+	"github.com/gizzahub/gzh-manager-go/helpers"
+	"github.com/schollz/progressbar/v3"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
+	"time"
 )
 
 type RepoInfo struct {
@@ -43,6 +48,19 @@ func List(org string) ([]string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		//body, _ := io.ReadAll(resp.Body)
+		//fmt.Println(string(body))
+		//resp.Header.Write(os.Stdout)
+		rateReset := resp.Header.Get("X-RateLimit-Reset")
+		resetTime, err := strconv.ParseInt(rateReset, 10, 64)
+		if err == nil {
+			c := color.New(color.FgCyan, color.Bold)
+			c.Println("Github RateLimit !!! you must wait until: ")
+			c.Println(time.Unix(resetTime, 0).Format(time.RFC1123))
+			c.Printf("%d minutes and %d seconds\n", int(time.Until(time.Unix(resetTime, 0)).Minutes()), int(time.Until(time.Unix(resetTime, 0)).Seconds())%60)
+			c.Println("or Use Github Token (not provided yet ^*)\n")
+		}
+		// try after
 		return nil, fmt.Errorf("failed to get repositories: %s", resp.Status)
 	}
 
@@ -61,27 +79,37 @@ func List(org string) ([]string, error) {
 	return repoNames, nil
 }
 
-func Clone(targetPath string, org string, repo string, branch string) error {
-	if branch == "" {
-		defaultBranch, err := GetDefaultBranch(org, repo)
-		if err != nil {
-			return fmt.Errorf("failed to get default branch: %w", err)
-		}
-		branch = defaultBranch
-	}
+func Clone(targetPath string, org string, repo string) error {
+	//if branch == "" {
+	//	defaultBranch, err := GetDefaultBranch(org, repo)
+	//	if err != nil {
+	//		fmt.Println("failed to get default. clone without branch specify.")
+	//		//return fmt.Errorf("failed to get default branch: %w", err)
+	//	}
+	//	branch = defaultBranch
+	//}
 
 	cloneURL := fmt.Sprintf("https://github.com/%s/%s.git", org, repo)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
-	//cmd := exec.Command("git", "clone", "-b", branch, cloneURL, targetPath)
+
+	//var cmd *exec.Cmd
+	//if branch == "" {
+	//	//cmd := exec.Command("git", "clone", cloneURL, targetPath)
+	//	cmd = exec.Command("git", "clone", "-b", branch, cloneURL, targetPath)
+	//} else {
+	//	cmd = exec.Command("git", "clone", cloneURL, targetPath)
+	//}
 	cmd := exec.Command("git", "clone", cloneURL, targetPath)
 	cmd.Stdout = &out
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
 		fmt.Println(stderr.String())
 		fmt.Println(out.String())
-		return fmt.Errorf("Clone Failed  (url: %s, branch: %s, targetPath: %s, err: %w)\n", cloneURL, branch, targetPath, err)
+		fmt.Println("execute git clone fail: ", out.String())
+		return fmt.Errorf("Clone Failed  (url: %s, branch: %s, targetPath: %s, err: %w)\n", cloneURL, targetPath, err)
 	}
+	fmt.Println("execute git clone: ", out.String())
 
 	return nil
 }
@@ -100,34 +128,58 @@ func RefreshAll(targetPath string, org string) error {
 		return fmt.Errorf("failed to list repositories from organization: %w", err)
 	}
 
+	//bar := progressbar.Default(int64(len(orgRepos)), "Cloning Repositories")
+	bar := progressbar.NewOptions(len(orgRepos),
+		progressbar.OptionSetDescription("Cloning Repositories"),
+		progressbar.OptionSetRenderBlankState(true),
+	)
+
 	// Determine repos to delete (targetRepos - orgRepos)
-	reposToDelete := difference(targetRepos, orgRepos)
+	//reposToDelete := difference(targetRepos, orgRepos)
 
 	// Delete repos that are not in the organization
-	for _, repo := range reposToDelete {
+	for _, repo := range targetRepos {
 		repoPath := filepath.Join(targetPath, repo)
-		if err := os.RemoveAll(repoPath); err != nil {
-			return fmt.Errorf("failed to delete repository %s: %w", repoPath, err)
+		repoType, _ := helpers.CheckGitRepoType(repoPath)
+		if !Contains(targetRepos, repo) || repoType == "none" {
+			if err := os.RemoveAll(repoPath); err != nil {
+				return fmt.Errorf("failed to delete repository %s: %w", repoPath, err)
+			}
 		}
 	}
 
+	// print all orgs
+	c := color.New(color.FgCyan, color.Bold)
+	c.Println("All Target %d >>>>>>>>>>>>>>>>>>>>", len(orgRepos))
+	fmt.Println(len(orgRepos))
+	for _, repo := range orgRepos {
+		c.Println(repo)
+	}
+	c.Println("All Target <<<<<<<<<<<<<<<<<<<")
+
 	// Clone or reset hard HEAD for each repository in the organization
 	for _, repo := range orgRepos {
+		bar.Describe(fmt.Sprintf("Clone or Reset %s", repo))
 		repoPath := filepath.Join(targetPath, repo)
 		if _, err := os.Stat(repoPath); os.IsNotExist(err) {
 			// Clone the repository if it does not exist
-			if err := Clone(repoPath, org, repo, ""); err != nil {
+			if err := Clone(repoPath, org, repo); err != nil {
 				//fmt.Printf("failed to clone repository %s: %w\n", repoPath, err)
 				return fmt.Errorf("failed to clone repository %s: %w", repoPath, err)
 			}
 		} else {
 			// Reset hard HEAD if the repository already exists
+			fmt.Print("else reset >>>>>>")
 			cmd := exec.Command("git", "-C", repoPath, "reset", "--hard", "HEAD")
 			if err := cmd.Run(); err != nil {
+				fmt.Println("execute git reset fail: ", err)
 				return fmt.Errorf("failed to reset repository %s: %w", repoPath, err)
 			}
-			fmt.Printf("Repo Clone or Reset Success: %s\n", repoPath)
+			fmt.Println("else reset <<<<<<")
+			fmt.Println()
+			//fmt.Printf("Repo Clone or Reset Success: %s\n", repoPath)
 		}
+		bar.Add(1)
 	}
 
 	return nil
@@ -163,4 +215,13 @@ func difference(a, b []string) []string {
 		}
 	}
 	return diff
+}
+
+func Contains(list []string, element string) bool {
+	for _, item := range list {
+		if item == element {
+			return true
+		}
+	}
+	return false
 }

@@ -11,7 +11,7 @@ func CheckGitRepoType(dir string) (string, error) {
 	// Git 디렉토리인지 확인
 	_, err := os.Stat(dir + "/.git")
 	if os.IsNotExist(err) {
-		return "Not a git repository", nil
+		return "none", nil
 	}
 	//cmd := exec.Command("git", "-C", dir, "rev-parse", "--is-inside-work-tree")
 	//err := cmd.Run()
@@ -24,7 +24,8 @@ func CheckGitRepoType(dir string) (string, error) {
 	cmd := exec.Command("git", "-C", dir, "rev-list", "--count", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
-		return "", fmt.Errorf("failed to count commits: %v", err)
+		fmt.Errorf("failed to count commits: %v", err)
+		panic(err)
 	}
 
 	commitCount := strings.TrimSpace(string(output))
@@ -32,9 +33,9 @@ func CheckGitRepoType(dir string) (string, error) {
 
 	// 0 커밋인 경우
 	if commitCount == "0" {
-		return "Empty git repository", nil
+		return "empty", nil
 	}
 
 	// 커밋이 있는 경우
-	return "Normal git repository", nil
+	return "normal", nil
 }

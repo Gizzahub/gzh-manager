@@ -28,6 +28,9 @@ func newSetcloneGithubCmd() *cobra.Command {
 	cmd.Flags().StringVarP(&o.targetPath, "targetPath", "t", o.targetPath, "targetPath")
 	cmd.Flags().StringVarP(&o.orgName, "orgName", "o", o.orgName, "orgName")
 
+	cmd.MarkFlagRequired("targetPath")
+	cmd.MarkFlagRequired("orgName")
+
 	return cmd
 }
 
@@ -38,7 +41,9 @@ func (o *setcloneGithubOptions) run(_ *cobra.Command, args []string) error {
 
 	err := github.RefreshAll(o.targetPath, o.orgName)
 	if err != nil {
-		return err
+		//return err
+		//return fmt.Errorf("failed to refresh repositories: %w", err)
+		return nil
 	}
 
 	return nil
