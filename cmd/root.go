@@ -8,8 +8,8 @@ import (
 
 func newRootCmd(version string) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "gzh-manager",
-		Short: "golang-cli project template demo application",
+		Use:   "gz",
+		Short: "Cli 종합 Manager by Gizzahub",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return cmd.Help()
 		},

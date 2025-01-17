@@ -9,15 +9,18 @@ help: ## list makefile targets
 
 .PHONY: build
 build: ## build golang binary
-	@go build -ldflags "-X main.version=$(shell git describe --abbrev=0 --tags)" -o $(executablename)
+	@echo "Building $(executablename)..."
+	@go build -ldflags "-X main.version=$(shell git describe --always --abbrev=0 --tags)" -o $(executablename)
 
 .PHONY: install
-install: ## install golang binary
-	@go install -ldflags "-X main.version=$(shell git describe --abbrev=0 --tags)"
+install: build ## install golang binary
+#	@go install -ldflags "-X main.version=$(shell git describe --always --abbrev=0 --tags)"
+	@echo "Installing $(executablename)..."
+	@mv $(executablename) $(shell go env GOPATH)/bin/
 
 .PHONY: run
 run: ## run the app
-	@go run -ldflags "-X main.version=$(shell git describe --abbrev=0 --tags)"  main.go
+	@go run -ldflags "-X main.version=$(shell git describe --always --abbrev=0 --tags)"  main.go
 
 .PHONY: bootstrap
 bootstrap: ## install build deps
@@ -30,7 +33,9 @@ test: clean ## display test coverage
 	
 PHONY: clean
 clean: ## clean up environment
-	@rm -rf coverage.out dist/ $(executablename)
+	rm -rf coverage.out dist/ $(executablename)
+	rm -f $(shell go env GOPATH)/bin/$(executablename)
+	rm -f $(shell go env GOPATH)/bin/$(projectname)
 
 PHONY: cover
 cover: ## display test coverage
