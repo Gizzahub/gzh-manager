@@ -1,38 +1,38 @@
 version: 0.1
 
+# global default
 default:
-  protocol: ssh
+  private: false
+  protocol: https
+  strategy: include
+  branch: master
   github:
     token: null
   gitlab:
     token: null
 # http. token?
 
-repo_roots:
-  - root_path: /home/$USER/mywork/scriptonbasestar
-    provider: github
-    token: null
-    org_name: scriptonbasestar
-    protocol: ssh
-    ignore_names:
-      - "proxynd"
-      - "proxynd-configmap"
-  - root_path: /home/$USER/mywork/jenkinsci
-    provider: github
-    token: null
-    org_name: jenkinsci
-    protocol: https
-  - root_path: /home/$USER/mywork/istio
-    provider: github
-    token: null
-    org_name: istio
-    protocol: https
-  - root_path: /home/$USER/mywork/inkscape
-    provider: gitlab
-    token: null
-    # default, 호스팅인 경우 별도 주소 설정
-    url: https://gitlab.com
-    recursive: true
-    group_name: inkscape
-    protocol: https
-
+github:
+  ScriptonBasestar:
+    targetPath: $HOME/myopen/scriptonbasestar
+    # org default
+    default:
+      strategy: include
+      branch: develop
+      protocol: ssh
+    includes:
+      proxynd:
+        branch: develop
+      devops-minim-engine:
+        branch: dev
+    excludes:
+      - .github
+      # regex
+      - sb-wp-*
+    override:
+      include:
+  nginxinc:
+  apache:
+    includes:
+      - superset
+      - dubbo
