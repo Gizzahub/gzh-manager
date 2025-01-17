@@ -1,5 +1,5 @@
 projectname?=gzh-manager
-executablename?=gzh-manager
+executablename?=gz
 
 default: help
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# 뭔지 모르겠네
 set -euo pipefail
 
 read -rp "GitHub Username: " user

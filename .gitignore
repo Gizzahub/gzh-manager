@@ -6,7 +6,10 @@
 
 # build
 build/
+
+# exe
 /gzh-manager
+/gz
 /gzh
 
 # test
@@ -17,7 +20,6 @@ tmpconf/
 *-test.yaml
 *-test.yml
 *-test.json
-
 
 # dependencies
 node_modules/
