@@ -174,18 +174,19 @@ func RefreshAll(targetPath string, org string) error {
 			if repoType != "empty" {
 				cmd := exec.Command("git", "-C", repoPath, "reset", "--hard", "HEAD")
 				if err := cmd.Run(); err != nil {
-					fmt.Println("execute git reset fail: empty dir - ", err)
+					fmt.Print("execute git reset fail: empty dir - ", err)
 					//return fmt.Errorf("failed to reset repository %s: %w", repoPath, err)
 				}
 			}
 			cmd := exec.Command("git", "-C", repoPath, "pull")
 			if err := cmd.Run(); err != nil {
-				fmt.Println("execute git pull fail: no branch? - ", err)
+				fmt.Print("execute git pull fail: no branch? - ", err)
 				//return fmt.Errorf("failed to pull repository %s: %w", repoPath, err)
 			}
 			//fmt.Println("else reset <<<<<<")
 			//fmt.Printf("Repo Clone or Reset Success: %s\n", repoPath)
 		}
+		fmt.Println()
 		bar.Add(1)
 	}
 
