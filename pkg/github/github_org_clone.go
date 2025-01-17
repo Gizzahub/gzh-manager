@@ -151,7 +151,6 @@ func RefreshAll(targetPath string, org string) error {
 	// print all orgs
 	c := color.New(color.FgCyan, color.Bold)
 	c.Println("All Target %d >>>>>>>>>>>>>>>>>>>>", len(orgRepos))
-	fmt.Println(len(orgRepos))
 	for _, repo := range orgRepos {
 		c.Println(repo)
 	}
