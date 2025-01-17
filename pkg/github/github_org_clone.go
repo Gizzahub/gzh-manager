@@ -168,14 +168,22 @@ func RefreshAll(targetPath string, org string) error {
 			}
 		} else {
 			// Reset hard HEAD if the repository already exists
-			fmt.Print("else reset >>>>>>")
-			cmd := exec.Command("git", "-C", repoPath, "reset", "--hard", "HEAD")
-			if err := cmd.Run(); err != nil {
-				fmt.Println("execute git reset fail: ", err)
-				return fmt.Errorf("failed to reset repository %s: %w", repoPath, err)
+			//fmt.Print("else reset >>>>>>")
+			// pass if empty
+			repoType, _ := helpers.CheckGitRepoType(repoPath)
+			if repoType != "empty" {
+				cmd := exec.Command("git", "-C", repoPath, "reset", "--hard", "HEAD")
+				if err := cmd.Run(); err != nil {
+					fmt.Println("execute git reset fail: empty dir - ", err)
+					//return fmt.Errorf("failed to reset repository %s: %w", repoPath, err)
+				}
 			}
-			fmt.Println("else reset <<<<<<")
-			fmt.Println()
+			cmd := exec.Command("git", "-C", repoPath, "pull")
+			if err := cmd.Run(); err != nil {
+				fmt.Println("execute git pull fail: no branch? - ", err)
+				//return fmt.Errorf("failed to pull repository %s: %w", repoPath, err)
+			}
+			//fmt.Println("else reset <<<<<<")
 			//fmt.Printf("Repo Clone or Reset Success: %s\n", repoPath)
 		}
 		bar.Add(1)
