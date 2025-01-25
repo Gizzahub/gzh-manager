@@ -1,4 +1,4 @@
-package gzh_manager
+package cmd
 
 import (
 	"fmt"

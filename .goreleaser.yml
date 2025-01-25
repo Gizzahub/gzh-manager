@@ -9,7 +9,7 @@ before:
 
 builds:
   -
-    binary: gzh-manager
+    binary: bulk-clone
     ldflags: -s -w -X main.version={{ .Version }}
     goos:
       - linux
@@ -21,7 +21,7 @@ builds:
 archives:
   -
     builds:
-      - gzh-manager
+      - bulk-clone
     format_overrides:
       - goos: windows
         format: zip
@@ -32,7 +32,7 @@ archives:
 
 nfpms:
   - builds:
-      - gzh-manager
+      - bulk-clone
     vendor: Gizzahub
     homepage:  https://github.com/Gizzahub/gzh-manager-go
     maintainer: "Tom Morelly <tommorelly@gmail.com>"
@@ -44,19 +44,19 @@ nfpms:
       - rpm
     bindir: /usr/bin
     contents:
-      - src: ./manpages/gzh-manager.1.gzh-manager
-        dst: /usr/share/man/man1/gzh-manager.1.gzh-manager
+      - src: ./manpages/bulk-clone.1.bulk-clone
+        dst: /usr/share/man/man1/bulk-clone.1.bulk-clone
         file_info:
           mode: 0644
-      - src: ./completions/gzh-manager.bash
-        dst: /usr/share/bash-completion/completions/gzh-manager
+      - src: ./completions/bulk-clone.bash
+        dst: /usr/share/bash-completion/completions/bulk-clone
         file_info:
           mode: 0644
-      - src: ./completions/gzh-manager.fish
-        dst: /usr/share/fish/vendor_completions.d/gzh-manager.fish
+      - src: ./completions/bulk-clone.fish
+        dst: /usr/share/fish/vendor_completions.d/bulk-clone.fish
         file_info:
           mode: 0644
-      - src: ./completions/gzh-manager.zsh
+      - src: ./completions/bulk-clone.zsh
         dst:  /usr/share/zsh/vendor-completions/_gzh-manager
         file_info:
           mode: 0644
@@ -69,7 +69,7 @@ dockers:
   use: buildx
   build_flag_templates:
   - "--pull"
-  - "--label=io.artifacthub.package.readme-url=https://raw.githubusercontent.com/Gizzahub/gzh-manager/master/README.md"
+  - "--label=io.artifacthub.package.readme-url=https://raw.githubusercontent.com/Gizzahub/bulk-clone/master/README.md"
   - "--label=io.artifacthub.package.maintainers=[{\"name\":\"Tom Morelly\",\"email\":\"tommorelly@gmail.com\"}]"
   - "--label=io.artifacthub.package.license=MIT"
   - "--label=org.opencontainers.image.description=A general purpose golang CLI template for Github and Gitlab"
@@ -86,8 +86,8 @@ dockers:
   use: buildx
   build_flag_templates:
   - "--pull"
-  - "--label=io.artifacthub.package.readme-url=https://raw.githubusercontent.com/gizzahub/gzh-manager/master/README.md"
-  - "--label=io.artifacthub.package.logo-url=https://raw.githubusercontent.com/gizzahub/gzh-manager/master/www/static/images/logo.png"
+  - "--label=io.artifacthub.package.readme-url=https://raw.githubusercontent.com/gizzahub/bulk-clone/master/README.md"
+  - "--label=io.artifacthub.package.logo-url=https://raw.githubusercontent.com/gizzahub/bulk-clone/master/www/static/images/logo.png"
   - "--label=io.artifacthub.package.maintainers=[{\"name\":\"Tom Morelly\",\"email\":\"tommorelly@gmail.com\"}]"
   - "--label=io.artifacthub.package.license=MIT"
   - "--label=org.opencontainers.image.description=A general purpose golang CLI template for Github and Gitlab"

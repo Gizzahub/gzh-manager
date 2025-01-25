@@ -1,11 +1,11 @@
-package gzh_manager
+package gen_config
 
 import "github.com/spf13/cobra"
 
-func newSetcloneCmd() *cobra.Command {
+func NewSetcloneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:          "setclone",
-		Short:        "setclone subcommand to manage GitHub org repositories",
+		Use:          "bulk-clone",
+		Short:        "bulk-clone subcommand to manage GitHub org repositories",
 		SilenceUsage: true,
 	}
 

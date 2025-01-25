@@ -1,4 +1,4 @@
-package setclone
+package bulk_clone
 
 import (
 	"errors"
@@ -12,13 +12,13 @@ import (
 )
 
 // >>>>>>>>>> default >>>>>>>>>>
-type SetcloneDefault struct {
-	Protocol string                `yaml:"protocol" validate:"required,oneof=http https ssh"`
-	Github   SetcloneDefaultGithub `yaml:"github"`
-	Gitlab   SetcloneDefaultGitlab `yaml:"gitlab"`
+type BulkCloneDefault struct {
+	Protocol string                 `yaml:"protocol" validate:"required,oneof=http https ssh"`
+	Github   BulkCloneDefaultGithub `yaml:"github"`
+	Gitlab   BulkCloneDefaultGitlab `yaml:"gitlab"`
 }
 
-type SetcloneDefaultGithub struct {
+type BulkCloneDefaultGithub struct {
 	RootPath string `yaml:"root_path"`
 	Provider string `yaml:"provider"`
 	url      string `yaml:"url"`
@@ -26,7 +26,7 @@ type SetcloneDefaultGithub struct {
 	OrgName  string `yaml:"org_name"`
 }
 
-type SetcloneDefaultGitlab struct {
+type BulkCloneDefaultGitlab struct {
 	RootPath  string `yaml:"root_path"`
 	Provider  string `yaml:"provider"`
 	Url       string `yaml:"url"`
@@ -37,7 +37,7 @@ type SetcloneDefaultGitlab struct {
 
 // <<<<<<<<<< default <<<<<<<<<<
 
-type SetcloneGithub struct {
+type BulkCloneGithub struct {
 	RootPath string `yaml:"root_path" validate:"required"`
 	Provider string `yaml:"provider" validate:"required"`
 	url      string `yaml:"url"`
@@ -45,7 +45,7 @@ type SetcloneGithub struct {
 	OrgName  string `yaml:"org_name" validate:"required"`
 }
 
-type SetcloneGitlab struct {
+type BulkCloneGitlab struct {
 	RootPath  string `yaml:"root_path" validate:"required"`
 	Provider  string `yaml:"provider" validate:"required"`
 	Url       string `yaml:"url"`
@@ -54,11 +54,11 @@ type SetcloneGitlab struct {
 	GroupName string `yaml:"group_name" binding:"required"`
 }
 
-type setcloneConfig struct {
-	Version           string           `yaml:"version"`
-	Default           SetcloneDefault  `yaml:"default"`
-	IgnoreNameRegexes []string         `yaml:"ignore_names"`
-	RepoRoots         []SetcloneGithub `yaml:"repo_roots"`
+type bulkCloneConfig struct {
+	Version           string            `yaml:"version"`
+	Default           BulkCloneDefault  `yaml:"default"`
+	IgnoreNameRegexes []string          `yaml:"ignore_names"`
+	RepoRoots         []BulkCloneGithub `yaml:"repo_roots"`
 }
 
 func fileExists(filePath string) bool {
@@ -66,12 +66,12 @@ func fileExists(filePath string) bool {
 	return !os.IsNotExist(err)
 }
 
-func (cfg *setcloneConfig) ConfigExists(targetPath string) bool {
-	return fileExists(path.Join(targetPath, "setclone.yaml"))
+func (cfg *bulkCloneConfig) ConfigExists(targetPath string) bool {
+	return fileExists(path.Join(targetPath, "bulk-clone.yaml"))
 }
 
-func (cfg *setcloneConfig) ReadConfig(targetPath string) {
-	configPath := path.Join(targetPath, "setclone.yaml")
+func (cfg *bulkCloneConfig) ReadConfig(targetPath string) {
+	configPath := path.Join(targetPath, "bulk-clone.yaml")
 
 	data, err := os.ReadFile(configPath)
 	if err != nil {
@@ -119,7 +119,7 @@ func printValidationErrors(err error) {
 }
 
 // 유효성 검사 함수
-func (cfg *setcloneConfig) validateConfig() error {
+func (cfg *bulkCloneConfig) validateConfig() error {
 	// validate := validator.New(validator.WithRequiredStructEnabled())
 	validate := validator.New()
 	return validate.Struct(cfg)

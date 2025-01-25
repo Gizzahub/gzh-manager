@@ -8,7 +8,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type setcloneConfig struct {
+type bulkCloneConfig struct {
 	GithubUrl       string   `yaml:"github_url"`
 	GithubToken     string   `yaml:"github_token"`
 	DefaultProtocol string   `yaml:"default_protocol"`
@@ -28,13 +28,13 @@ func fileExists(filePath string) bool {
 }
 
 // ConfigExists checks if the configuration file exists
-func (cfg *setcloneConfig) ConfigExists() bool {
+func (cfg *bulkCloneConfig) ConfigExists() bool {
 	configDir := getConfigDir()
-	return fileExists(path.Join(configDir, "setclone.yaml"))
+	return fileExists(path.Join(configDir, "bulk-clone.yaml"))
 }
 
 // ReadConfig reads and unmarshals the YAML configuration file
-func (cfg *setcloneConfig) ReadConfig(fullpath string) {
+func (cfg *bulkCloneConfig) ReadConfig(fullpath string) {
 	configDir := getConfigDir()
 	configPath := path.Join(configDir, fullpath)
 

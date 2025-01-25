@@ -1,4 +1,4 @@
-package gzh_manager
+package cmd
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 func newVersionCmd(version string) *cobra.Command {
 	return &cobra.Command{
 		Use:          "version",
-		Short:        "gzh-manager version",
+		Short:        "bulk-clone version",
 		Args:         cobra.NoArgs,
 		SilenceUsage: true,
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Fprintf(cmd.OutOrStdout(), "gzh-manager: %s\n", version)
+			fmt.Fprintf(cmd.OutOrStdout(), "bulk-clone: %s\n", version)
 		},
 	}
 }

@@ -1,21 +1,21 @@
-package gzh_manager
+package bulk_clone
 
 import (
 	"fmt"
 	"github.com/spf13/cobra"
 )
 
-type setcloneGiteaOptions struct {
+type bulkCloneGiteaOptions struct {
 	targetPath string
 	orgName    string
 }
 
-func defaultSetcloneGiteaOptions() *setcloneGiteaOptions {
-	return &setcloneGiteaOptions{}
+func defaultBulkCloneGiteaOptions() *bulkCloneGiteaOptions {
+	return &bulkCloneGiteaOptions{}
 }
 
-func newSetcloneGiteaCmd() *cobra.Command {
-	o := defaultSetcloneGiteaOptions()
+func newBulkCloneGiteaCmd() *cobra.Command {
+	o := defaultBulkCloneGiteaOptions()
 
 	cmd := &cobra.Command{
 		Use:   "gitea",
@@ -30,7 +30,7 @@ func newSetcloneGiteaCmd() *cobra.Command {
 	return cmd
 }
 
-func (o *setcloneGiteaOptions) run(_ *cobra.Command, args []string) error {
+func (o *bulkCloneGiteaOptions) run(_ *cobra.Command, args []string) error {
 	if o.targetPath == "" || o.orgName == "" {
 		return fmt.Errorf("both targetPath and orgName must be specified")
 	}

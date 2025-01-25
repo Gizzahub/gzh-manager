@@ -1,4 +1,4 @@
-package setclone
+package bulk_clone
 
 import (
 	"testing"
@@ -11,11 +11,11 @@ import (
 //}
 
 func TestReadConfig(t *testing.T) {
-	// use setclone.yaml
+	// use bulk-clone.yaml
 	// call setclond_config.ReadConfig
 
-	config := &setcloneConfig{}
-	//setcloneConfig.ReadConfig("../../../test")
+	config := &bulkCloneConfig{}
+	//bulkCloneConfig.ReadConfig("../../../test")
 	//config.ReadConfig("../../../test")
 	config.ReadConfig("./")
 	// t.Log(yaml.Marshal(config))

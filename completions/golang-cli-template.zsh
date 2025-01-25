@@ -1,6 +1,6 @@
-#compdef gzh-manager
+#compdef bulk-clone
 
-# zsh completion for gzh-manager                  -*- shell-script -*-
+# zsh completion for bulk-clone                  -*- shell-script -*-
 
 __gzh-manager_debug()
 {
@@ -35,7 +35,7 @@ _gzh-manager()
     lastChar=${lastParam[-1]}
     __gzh-manager_debug "lastParam: ${lastParam}, lastChar: ${lastChar}"
 
-    # For zsh, when completing a flag with an = (e.g., gzh-manager -n=<TAB>)
+    # For zsh, when completing a flag with an = (e.g., bulk-clone -n=<TAB>)
     # completions must be prefixed with the flag
     setopt local_options BASH_REMATCH
     if [[ "${lastParam}" =~ '-.*=' ]]; then

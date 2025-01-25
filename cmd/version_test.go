@@ -1,4 +1,4 @@
-package gzh_manager
+package cmd
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 func TestVersionCommand(t *testing.T) {
 	version := "v1.0.0"
-	cmd := newVersionCmd(version)
+	cmd := NewVersionCmd(version)
 	b := bytes.NewBufferString("")
 	cmd.SetOut(b)
 
@@ -22,5 +22,5 @@ func TestVersionCommand(t *testing.T) {
 	out, err := io.ReadAll(b)
 	require.NoError(t, err)
 
-	assert.Equal(t, fmt.Sprintf("gzh-manager: %s\n", version), string(out))
+	assert.Equal(t, fmt.Sprintf("bulk-clone: %s\n", version), string(out))
 }

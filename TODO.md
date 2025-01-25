@@ -1,26 +1,26 @@
-# TODO to setclone
+# TODO to bulk-clone
 
 ## 중요!!
 테스트 할 때 Gizzahub에다 하지 않기 ^^
 동작 잘 하는거 확인했다 ^^b al
 
-## Setclone
-- [ ] setclone cli
+## Bulk Clone
+- [ ] bulk-clone cli
   - [x] -o organization name: `-o ScriptonBasestar`
   - [x] -t targetPath: `-t $HOME/mywork/ScriptonBasestar`
   - [x] -p proto: `-p https` or `-p ssh`
   - [x] -a auth: `-a token` 토큰이 있으면 private repo도 clone
   - [ ] -s strategy: `-s reset` or `-s pull` or `-s fetch`
-- [ ] setclone.yaml 설정파일 지원
-- [ ] setclone.yaml override setclone.home.yaml setclone.work.yaml. kustomize 이용
-- [ ] setclone.yaml 설정파일 예시
-- [ ] setclone.yaml schema
+- [ ] bulk-clone.yaml 설정파일 지원
+- [ ] bulk-clone.yaml override bulk-clone.home.yaml bulk-clone.work.yaml. kustomize 이용
+- [ ] bulk-clone.yaml 설정파일 예시
+- [ ] bulk-clone.yaml schema
 
 ### Github Org
-- [x] gituhb org setclone cli
+- [x] gituhb org bulk-clone cli
 
 ### Gitlab Org
-- [ ] gitlab group setclone cli
+- [ ] gitlab group bulk-clone cli
 
 ### Ssh config
 - [ ] ssh config 설정

@@ -1,7 +1,8 @@
-package gzh_manager
+package cmd
 
 import (
 	"fmt"
+	"github.com/gizzahub/gzh-manager-go/cmd/bulk-clone"
 
 	"github.com/spf13/cobra"
 )
@@ -15,8 +16,8 @@ func newRootCmd(version string) *cobra.Command {
 		},
 	}
 
-	cmd.AddCommand(newVersionCmd(version)) // version subcommand
-	cmd.AddCommand(newSetcloneCmd())       // setclone subcommand
+	cmd.AddCommand(newVersionCmd(version))       // version subcommand
+	cmd.AddCommand(bulk_clone.NewBulkCloneCmd()) // bulk-clone subcommand
 
 	return cmd
 }

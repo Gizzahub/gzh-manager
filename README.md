@@ -31,22 +31,23 @@ Comprehensive CLI Tool
 
 # Usage
 
-## Setclone
+## 기능
 Clone repositories by GitHub account (user, org) or GitLab group.
 
-- setclone
+- bulk-clone
   - git
   - gitea
   - github
   - gitlab
   - gogs
+- gen-config
 
 ### CLI
 
 
 ```sh
-$> gzh-manager -h
-golang-cli cli application by managing gzh-manager
+$> bulk-clone -h
+golang-cli cli application by managing bulk-clone
 
 Usage:
   gzh [flags]
@@ -54,32 +55,32 @@ Usage:
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
-  setclone    Clone repositories in bulk
+  bulk-clone    Clone repositories in bulk
   help        Help about any command
-  version     gzh-manager version
+  version     bulk-clone version
 
 Flags:
-  -h, --help   help for gzh-manager
+  -h, --help   help for bulk-clone
 
 Use "gzh-manager [command] --help" for more information about a command.
 ```
 
 First, create a configuration file in the desired path. Refer to
-[setclone.yaml](pkg/setclone/setclone.yaml)
+[bulk-clone.yaml](pkg/bulk-clone/bulk-clone.yaml)
 
 ```sh
-$> gzh setclone -t $HOME/mywork
+$> gzh bulk-clone -t $HOME/mywork
 
 This won't work:
-$> gzh setclone -t ./mywork
-$> gzh setclone -t $HOME/mywork
-$> gzh setclone -t ~/mywork
+$> gzh bulk-clone -t ./mywork
+$> gzh bulk-clone -t $HOME/mywork
+$> gzh bulk-clone -t ~/mywork
 ```
 
-### Setclone config
+### Bulk Clone config
 
 ```yaml
-# setclone.yaml 
+# bulk-clone.yaml 
 github:
   ScriptonBasestar:
    auth: token
@@ -102,9 +103,9 @@ github:
 ```
 
 ```bash
-gzh setclone -o nginxinc
-gzh setclone -o nginxinc -t $HOME/mywork/nginxinc
-gzh setclone -o nginxinc -t $HOME/mywork/nginxinc --auth token
+gzh bulk-clone -o nginxinc
+gzh bulk-clone -o nginxinc -t $HOME/mywork/nginxinc
+gzh bulk-clone -o nginxinc -t $HOME/mywork/nginxinc --auth token
 ```
 
 ## Trigger

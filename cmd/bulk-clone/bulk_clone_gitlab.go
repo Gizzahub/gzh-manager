@@ -1,4 +1,4 @@
-package gzh_manager
+package bulk_clone
 
 import (
 	"fmt"
@@ -6,18 +6,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type setcloneGitlabOptions struct {
+type bulkCloneGitlabOptions struct {
 	targetPath  string
 	groupName   string
 	recursively bool
 }
 
-func defaultSetcloneGitlabOptions() *setcloneGitlabOptions {
-	return &setcloneGitlabOptions{}
+func defaultBulkCloneGitlabOptions() *bulkCloneGitlabOptions {
+	return &bulkCloneGitlabOptions{}
 }
 
-func newSetcloneGitlabCmd() *cobra.Command {
-	o := defaultSetcloneGitlabOptions()
+func newBulkCloneGitlabCmd() *cobra.Command {
+	o := defaultBulkCloneGitlabOptions()
 
 	cmd := &cobra.Command{
 		Use:   "gitlab",
@@ -33,7 +33,7 @@ func newSetcloneGitlabCmd() *cobra.Command {
 	return cmd
 }
 
-func (o *setcloneGitlabOptions) run(_ *cobra.Command, args []string) error {
+func (o *bulkCloneGitlabOptions) run(_ *cobra.Command, args []string) error {
 	if o.targetPath == "" || o.groupName == "" {
 		return fmt.Errorf("both targetPath and groupName must be specified")
 	}
