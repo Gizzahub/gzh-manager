@@ -6,17 +6,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type setcloneGithubOptions struct {
+type genConfigGithubOptions struct {
 	targetPath string
 	orgName    string
 }
 
-func defaultSetcloneGithubOptions() *setcloneGithubOptions {
-	return &setcloneGithubOptions{}
+func defaultGenConfigGithubOptions() *genConfigGithubOptions {
+	return &genConfigGithubOptions{}
 }
 
-func newSetcloneGithubCmd() *cobra.Command {
-	o := defaultSetcloneGithubOptions()
+func newGenConfigGithubCmd() *cobra.Command {
+	o := defaultGenConfigGithubOptions()
 
 	cmd := &cobra.Command{
 		Use:   "github",
@@ -34,7 +34,7 @@ func newSetcloneGithubCmd() *cobra.Command {
 	return cmd
 }
 
-func (o *setcloneGithubOptions) run(_ *cobra.Command, args []string) error {
+func (o *genConfigGithubOptions) run(_ *cobra.Command, args []string) error {
 	if o.targetPath == "" || o.orgName == "" {
 		return fmt.Errorf("both targetPath and orgName must be specified")
 	}

@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/gizzahub/gzh-manager-go/cmd/bulk-clone"
+
+	bulk_clone "github.com/gizzahub/gzh-manager-go/cmd/bulk-clone"
+	gen_config "github.com/gizzahub/gzh-manager-go/cmd/gen-config"
 
 	"github.com/spf13/cobra"
 )
@@ -16,8 +18,9 @@ func newRootCmd(version string) *cobra.Command {
 		},
 	}
 
-	cmd.AddCommand(newVersionCmd(version))       // version subcommand
-	cmd.AddCommand(bulk_clone.NewBulkCloneCmd()) // bulk-clone subcommand
+	cmd.AddCommand(newVersionCmd(version))
+	cmd.AddCommand(bulk_clone.NewBulkCloneCmd())
+	cmd.AddCommand(gen_config.NewGenConfigCmd())
 
 	return cmd
 }

@@ -12,7 +12,7 @@ import (
 
 func TestVersionCommand(t *testing.T) {
 	version := "v1.0.0"
-	cmd := NewVersionCmd(version)
+	cmd := newVersionCmd(version)
 	b := bytes.NewBufferString("")
 	cmd.SetOut(b)
 
